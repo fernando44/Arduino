@@ -1,0 +1,179 @@
+//Configuração de Distancia Mínima em centimetros
+const int DistanciaMaxima = 30;
+int vaga=4;
+
+int DistanciaSensor=0;
+//config de portas
+//________________________________________________________________________________________
+//SENSORES
+//________________________________________________________________________________________
+//Sensor1
+const int EntradaTrig1 = 7;
+const int EntradaEcho1 = 6;
+
+//Sensor2
+const int EntradaTrig2 = 9;
+const int EntradaEcho2 = 8;
+
+//Sensor3
+const int EntradaTrig3 = 11;
+const int EntradaEcho3 = 10;
+
+//Sensor4
+const int EntradaTrig4 = 13;
+const int EntradaEcho4 = 12;
+//_________________________________________________________________________________________
+
+//_________________________________________________________________________________________
+//led
+//_________________________________________________________________________________________
+//led4
+const int LedVerde4 = 5;
+const int LedVermelho4 = 4;
+
+//led3
+const int LedVerde3 = 3;
+const int LedVermelho3 = 2;
+
+//led2
+const int LedVerde2 = 1;
+const int LedVermelho2 = 0;
+
+//led1 - falta portas
+const int LedVerde1 = 10;
+const int LedVermelho1 = 80;
+//____________________________________________________________________________________________
+
+void setup() {
+    Serial.begin(9600);
+
+    // Configurações do Sensor
+    pinMode(EntradaTrig1, OUTPUT);
+    pinMode(EntradaEcho1, INPUT);
+
+    pinMode(EntradaTrig2, OUTPUT);
+    pinMode(EntradaEcho2, INPUT);
+
+    pinMode(EntradaTrig3, OUTPUT);
+    pinMode(EntradaEcho3, INPUT);
+
+    pinMode(EntradaTrig4, OUTPUT);
+    pinMode(EntradaEcho4, INPUT);
+//______________________________________________________________________________________________
+    // Configurações do LED
+    pinMode(LedVerde1, OUTPUT);
+    pinMode(LedVermelho1, OUTPUT);
+
+    pinMode(LedVerde2, OUTPUT);
+    pinMode(LedVermelho2, OUTPUT);
+
+    pinMode(LedVerde3, OUTPUT);
+    pinMode(LedVermelho3, OUTPUT);
+
+    pinMode(LedVerde4, OUTPUT);
+    pinMode(LedVermelho4, OUTPUT);
+}
+
+void loop() {
+    vaga=4;
+    //sensor1
+    /*
+    int DistanciaSensor = CalculoDistancia(EntradaTrig1, EntradaEcho1);
+
+    if (DistanciaSensor <= DistanciaMaxima) {//Carro na vaga
+        Serial.print("Atencao: ");
+        Serial.print(DistanciaSensor);
+        Serial.println("cm");
+        digitalWrite(LedVerde1, LOW);
+        digitalWrite(LedVermelho1, HIGH);
+        vaga--;
+    }
+    else {//vaga livre
+        Serial.print("Livre: ");
+        Serial.print(DistanciaSensor);
+        Serial.println("cm");
+        digitalWrite(LedVerde1, HIGH);
+        digitalWrite(LedVermelho1, LOW);
+    }
+    delay(100);
+    DistanciaSensor=0;
+    */
+
+    //sensor2
+    DistanciaSensor = CalculoDistancia(EntradaTrig2, EntradaEcho2);
+
+    if (DistanciaSensor <= DistanciaMaxima) {//Carro na vaga
+       // Serial.print("Atencao: ");
+       // Serial.print(DistanciaSensor);
+       // Serial.println("cm");
+        digitalWrite(LedVerde2, LOW);
+        digitalWrite(LedVermelho2, HIGH);
+        vaga--;
+    }
+    else {//vaga livre
+        //Serial.print("Livre: ");
+       // Serial.print(DistanciaSensor);
+        //Serial.println("cm");
+        digitalWrite(LedVerde2, HIGH);
+        digitalWrite(LedVermelho2, LOW);
+    }
+    DistanciaSensor=0;
+    
+
+    //sensor3
+    DistanciaSensor = CalculoDistancia(EntradaTrig3, EntradaEcho3);
+
+    if (DistanciaSensor <= DistanciaMaxima) {//Carro na vaga
+        //Serial.print("Atencao: ");
+        //Serial.print(DistanciaSensor);
+       // Serial.println("cm");
+        digitalWrite(LedVerde3, LOW);
+        digitalWrite(LedVermelho3, HIGH);
+        vaga--;
+    }
+    else {//vaga livre
+        //Serial.print("Livre: ");
+        //Serial.print(DistanciaSensor);
+       // Serial.println("cm");
+        digitalWrite(LedVerde3, HIGH);
+        digitalWrite(LedVermelho3, LOW);
+    }
+    DistanciaSensor=0;
+    
+
+    //sensor4
+    DistanciaSensor = CalculoDistancia(EntradaTrig4, EntradaEcho4);
+
+    if (DistanciaSensor <= DistanciaMaxima) {//Carro na vaga
+        //Serial.print("Atencao: ");
+        //Serial.print(DistanciaSensor);
+        //Serial.println("cm");
+        digitalWrite(LedVerde4, LOW);
+        digitalWrite(LedVermelho4, HIGH);
+        vaga--;
+    }
+    else {//vaga livre
+        //Serial.print("Livre: ");
+        //Serial.print(DistanciaSensor);
+        //Serial.println("cm");
+        digitalWrite(LedVerde4, HIGH);
+        digitalWrite(LedVermelho4, LOW);
+    }
+    DistanciaSensor=0;
+		
+  	Serial.print("Vagas: ");
+    Serial.print(vaga);
+    vaga=4;
+  	
+}
+
+
+int CalculoDistancia(int pinotrig, int pinoecho) {
+    digitalWrite(pinotrig, LOW);
+    delayMicroseconds(2);
+    digitalWrite(pinotrig, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(pinotrig, LOW);
+
+    return pulseIn(pinoecho, HIGH) / 58;
+}
